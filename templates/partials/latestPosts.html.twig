@@ -1,0 +1,22 @@
+<div class="widget">
+    <h3 class="mb-4">Posts récents</h3>
+    <div class="post-entry-footer">
+        <ul>
+            {% for post in latestPosts %}
+                <li>
+                    <a href="{{ path('app_post_show', {'id': post.id}) }}">
+                        <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" class="me-4 rounded">
+                        <div class="text">
+                            <h4>{{ post.title }}</h4>
+                            <div class="post-meta">
+                                <span class="mr-2">{{ post.publishedAt ? post.publishedAt|date('M. jS, Y') : '' }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {% else %}
+                <li>Pas de post récents.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Actif</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles|join(', ') }}</td>
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        {% if user.isActive %}
+                            <button type="submit" name="action" value="deactivate" class="btn btn-warning btn-sm">Désactiver</button>
+                        {% else %}
+                            <button type="submit" name="action" value="activate" class="btn btn-success btn-sm">Activer</button>
+                        {% endif %}
+                    </form>
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <select name="role" class="form-control form-control-sm" style="display:inline; width:auto;">
+                            <option value="ROLE_USER" {% if 'ROLE_USER' in user.roles %}selected{% endif %}>Utilisateur</option>
+                            <option value="ROLE_ADMIN" {% if 'ROLE_ADMIN' in user.roles %}selected{% endif %}>Administrateur</option>
+                        </select>
+                        <button type="submit" name="action" value="change_role" class="btn btn-primary btn-sm">Changement de Rôle</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

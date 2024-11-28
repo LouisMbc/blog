@@ -1,5 +1,87 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+# config/routes.yaml
+
+app_home:
+    path: /
+    controller: App\Controller\HomeController::index
+    methods: GET
+
+app_register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+app_redirect_after_login:
+    path: /redirect-after-login
+    controller: App\Controller\SecurityController::redirectAfterLogin
+
+# Routes pour post
+app_post_index:
+    path: /post
+    controller: App\Controller\PostController::index
+
+app_post_new:
+    path: /post/new
+    controller: App\Controller\PostController::new
+
+app_post_edit:
+    path: /post/{id}/edit
+    controller: App\Controller\PostController::edit
+
+app_post_show:
+    path: /post/{id}
+    controller: App\Controller\PostController::show
+
+app_post_delete:
+    path: /post/{id}/delete
+    controller: App\Controller\PostController::delete
+
+# Routes pour category
+app_category_index:
+    path: /category
+    controller: App\Controller\CategoryController::index
+
+app_category_new:
+    path: /category/new
+    controller: App\Controller\CategoryController::new
+
+app_category_show:
+    path: /category/show
+    controller: App\Controller\CategoryController::show
+
+app_category_edit:
+    path: /category/edit
+    controller: App\Controller\CategoryController::edit
+
+app_category_delete:
+    path: /category/delete
+    controller: App\Controller\CategoryController::delete
+
+# Route pour commentaire
+app_comment_delete:
+    path: /comment/{id}/delete
+    controller: App\Controller\CommentController::delete
+
+# Routes pour l'administration
+app_admin_users:
+    path: /admin/users
+    controller: App\Controller\AdminController::users
+
+app_admin_posts:
+    path: /admin/posts
+    controller: App\Controller\AdminController::posts
+
+app_admin_comments:
+    path: /admin/comments/{postId}
+    controller: App\Controller\AdminController::comments
+
+# Routes pour les utilisateurs
+app_user_profile:
+    path: /profile
+    controller: App\Controller\UserController::profile

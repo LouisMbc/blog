@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h1>Profil</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.profilePicture) }}
+        <button class="btn">Sauver</button>
+    {{ form_end(form) }}
+
+    {% if user.profilePicture %}
+        <img src="{{ asset('uploads/profile_pictures/' ~ user.profilePicture) }}" alt="{{ user.firstName }}" style="max-width: 100px;">
+    {% endif %}
+{% endblock %}

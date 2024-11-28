@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post index{% endblock %}
+
+{% block body %}
+    <h1>Post index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Catégorie</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Créé le</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.category ? post.category.name : 'No category' }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.content }}</td>
+                <td>{{ post.publishedAt ? post.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {% if post.picture %}
+                        <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" style="max-width: 100px;">
+                    {% else %}
+                        No picture
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_post_show', {'id': post.id}) }}">Voir</a>
+                    <a href="{{ path('app_post_edit', {'id': post.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de post</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_post_new') }}">Créé un post</a>
+{% endblock %}

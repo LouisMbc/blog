@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+    <h1>Modifier son profil</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.profilePicture) }}
+        <button class="btn">Sauver</button>
+    {{ form_end(form) }}
+
+    {% if app.user.profilePicture %}
+        <img src="{{ asset('uploads/profile_pictures/' ~ app.user.profilePicture) }}" alt="{{ app.user.firstName }}" style="max-width: 100px;">
+    {% endif %}
+{% endblock %}
