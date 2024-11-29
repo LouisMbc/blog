@@ -71,12 +71,18 @@ class PostController extends AbstractController
     #[Route('/{id}', name: 'app_post_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user || !$user->isActive()) {
+            $this->addFlash('error', 'Votre compte est désactivé. Vous ne pouvez pas ajouter de commentaires.');
+            return $this->redirectToRoute('app_post_index');
+        }
+
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $comment->setUser($this->getUser());
+            $comment->setUser($user);
             $comment->setPost($post);
             $entityManager->persist($comment);
             $entityManager->flush();

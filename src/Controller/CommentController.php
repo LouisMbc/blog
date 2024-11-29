@@ -28,6 +28,7 @@ final class CommentController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+        $comment->setPublishedAt(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($comment);
@@ -55,6 +56,7 @@ final class CommentController extends AbstractController
     {
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+        $comment->setPublishedAt(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
