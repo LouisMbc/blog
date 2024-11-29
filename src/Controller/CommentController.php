@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/comment')]
 final class CommentController extends AbstractController
@@ -28,9 +28,10 @@ final class CommentController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $comment->setPublishedAt(new \DateTime());
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setCreatedAt(new \DateTime());
+            $comment->setStatus('en attente');
             $entityManager->persist($comment);
             $entityManager->flush();
 
@@ -56,7 +57,6 @@ final class CommentController extends AbstractController
     {
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        $comment->setPublishedAt(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -78,6 +78,6 @@ final class CommentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_post_index');
+        return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
     }
 }

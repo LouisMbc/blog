@@ -69,6 +69,15 @@ app_comment_delete:
     controller: App\Controller\CommentController::delete
 
 # Routes pour l'administration
+
+app_admin_validate_comments:
+    path: /admin/comments/validate
+    controller: App\Controller\AdminController::validateComments
+
+app_admin_validate_comment:
+    path: /admin/comments/validate/{id}
+    controller: App\Controller\AdminController::validateComment
+    
 app_admin_users:
     path: /admin/users
     controller: App\Controller\AdminController::users

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider les commentaires{% endblock %}
+
+{% block body %}
+    <h1>Valider les commentaires</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commentaire</th>
+                <th>Auteur</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.user ? comment.user.firstName : 'Unknown' }}</td>
+                <td>{{ comment.status }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_admin_validate_comment', {'id': comment.id}) }}" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('validate' ~ comment.id) }}">
+                        <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approuver</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Rejeter</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

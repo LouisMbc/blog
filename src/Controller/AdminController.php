@@ -94,4 +94,34 @@ class AdminController extends AbstractController
             'comments' => $post->getComments(),
         ]);
     }
+
+    #[Route('/comments/validate', name: 'app_admin_validate_comments', methods: ['GET'])]
+    public function validateComments(CommentRepository $commentRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $comments = $commentRepository->findBy(['status' => 'en attente']);
+
+        return $this->render('admin/validate_comment.html.twig', [
+            'comments' => $comments,
+        ]);
+    }
+
+    #[Route('/comments/validate/{id}', name: 'app_admin_validate_comment', methods: ['POST'])]
+    public function validateComment(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        if ($this->isCsrfTokenValid('validate'.$comment->getId(), $request->request->get('_token'))) {
+            $action = $request->request->get('action');
+            if ($action === 'approve') {
+                $comment->setStatus('approuvé');
+            } elseif ($action === 'reject') {
+                $comment->setStatus('rejeté');
+            }
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_validate_comments');
+    }
 }

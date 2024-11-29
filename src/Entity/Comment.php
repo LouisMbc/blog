@@ -20,8 +20,8 @@ class Comment
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $status = null;
+    #[ORM\Column(length: 25, nullable: true)]
+    private ?string $status = 'en attente';
 
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
@@ -71,7 +71,7 @@ class Comment
         return $this->status;
     }
 
-    public function setStatus(?string $status): static
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
 

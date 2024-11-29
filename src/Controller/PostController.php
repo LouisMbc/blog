@@ -84,6 +84,8 @@ class PostController extends AbstractController
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $comment->setUser($user);
             $comment->setPost($post);
+            $comment->setStatus('en attente');
+            $comment->setCreatedAt(new \DateTime());
             $entityManager->persist($comment);
             $entityManager->flush();
 
