@@ -13,22 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/post')]
-final class PostController extends AbstractController
+class PostController extends AbstractController
 {
     #[Route('/', name: 'app_post_index', methods: ['GET'])]
     public function index(PostRepository $postRepository): Response
     {
-        $user = $this->getUser();
-        $posts = $postRepository->findByUser($user);
-
         return $this->render('post/index.html.twig', [
-            'posts' => $posts,
+            'posts' => $postRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_post_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $post = new Post();
@@ -92,6 +91,7 @@ final class PostController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_post_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -110,6 +110,7 @@ final class PostController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
