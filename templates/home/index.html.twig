@@ -1,73 +1,62 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/glightbox.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/tiny-slider.css') }}">
-    <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"> 
+    {{ parent() }}
 {% endblock %}
-{% block javascripts %}<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('js/tiny-slider.js') }}"></script>
-        <script src="{{ asset('js/flatpickr.min.js') }}"></script>
-        <script src="{{ asset('js/aos.js') }}"></script>
-        <script src="{{ asset('js/glightbox.min.js') }}"></script>
-        <script src="{{ asset('js/navbar.js') }}"></script>
-        <script src="{{ asset('js/counter.js') }}"></script>
-        <script src="{{ asset('js/custom.js') }}"></script>
-         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
 
     {% for category in categories %}
         <!-- Start posts-entry -->
-	    <section class="section posts-entry">
+	    <section class="section">
 		    <div class="container">
-			    <div class="row mb-4">
-				    <div class="col-sm-6">
-                        <h2>{{ category.name }}</h2>
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                            <h2 class="posts-entry-title">{{ category.name }}</h2>
                     </div>
-                        <ul>
-                            <div class="row g-3">
-                                <div class="col-md-9">
-                                    <div class="row g-3">
-                                        {% for post in category.post %}
-                                            <div class="col-md-6">
-                                                <div class="blog-entry">
-                                                    {% if app.user %}
-                                                        <a href="{{ path('app_post_show', {'id': post.id}) }}">
-                                                            <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" style="max-width: 100px;">
-                                                        </a>
-                                                    {% else %}
-                                                        <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" style="max-width: 100px;">
-                                                    {% endif %}
-                                                        <span class="date">{{ post.publishedAt ? post.publishedAt|date('M. jS, Y') : '' }}</span>                                                    <h2>
-                                                    {% if app.user %}
-                                                        <h2><a href="{{ path('app_post_show', {'id': post.id}) }}">{{ post.title }}</a></h2>
-                                                    {% else %}
-                                                        <h2>{{ post.title }}</h2>
-                                                    {% endif %}
-                                                    <p>{{ post.content }}</p>
-                                                    {% if app.user %}
-                                                        <p><a href="{{ path('app_post_show', {'id': post.id}) }}" class="btn btn-sm btn-outline-primary">Lire plus</a></p>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
+                    <div class="row">
+
+                        {% for post in category.post %}
+                            <div class="col-lg-4 mb-4">
+                                <div class="post-entry-alt">
+                                    {% if app.user %}
+                                        <a href="{{ path('app_post_show', {'id': post.id}) }}" class="img-link">
+                                            <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" style="width: 400px; height: 250px; ">
+                                        </a>
+                                    {% else %}
+                                        <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" style="width: 400px; height: 250px ;">
+                                    {% endif %}
+                                    <div class="excerpt">
+                                        {% if app.user %}
+                                            <h2><a href="{{ path('app_post_show', {'id': post.id}) }}">{{ post.title }}</a></h2>
                                         {% else %}
-                                            <li>Pas de post pour cette catégorie</li>
-                                        {% endfor %}
+                                            <h2>{{ post.title }}</h2>
+                                        {% endif %}
+                                        <div class="post-meta align-items-center text-left clearfix">
+                                            {% if post.user %}
+                                                <figure class="author-figure mb-0 me-3 float-start"><img src="{{ post.user.profilePicture ? asset('uploads/profile_pictures/' ~ post.user.profilePicture) }}" alt="{{ post.user.firstName }}" class="img-fluid"></figure>
+                                            {% else %}
+                                                <figure class="author-figure mb-0 me-3 float-start"><img src="{{ asset('images/profil.png') }}" alt="Unconnu" class="img-fluid"></figure>   
+                                            {% endif %}
+                                            <span class="d-inline-block mt-1">Par <a href="#">{{ post.user.firstName }} {{ post.user.lastName }}</a></span>
+                                            <span>&nbsp;-&nbsp;{{ post.publishedAt ? post.publishedAt|date('M. jS, Y') : '' }}</span>
+                                            <p>{{ post.content }}</p>
+                                            {% if app.user %}
+                                                <p><a href="{{ path('app_post_show', {'id': post.id}) }}" class="btn btn-sm btn-outline-primary">Lire plus</a></p>
+                                            {% endif %}
+                                        </div>           
                                     </div>
                                 </div>
                             </div>
-                        </ul>
+                        {% else %}
+                            <li>Pas de post pour cette catégorie</li>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
     {% else %}
         <p>Pas de catégories</p>
     {% endfor %}

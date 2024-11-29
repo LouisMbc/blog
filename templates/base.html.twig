@@ -3,20 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Blog{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/glightbox.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/tiny-slider.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/glightbox.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
         <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         {% block stylesheets %} 
-            <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">  
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+	        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         {% endblock %}
     </head>
     <body>
@@ -140,18 +138,15 @@
                 </div>
             </div> 
         </footer>
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('js/tiny-slider.js') }}"></script>
-        <script src="{{ asset('js/flatpickr.min.js') }}"></script>
-        <script src="{{ asset('js/aos.js') }}"></script>
-        <script src="{{ asset('js/glightbox.min.js') }}"></script>
-        <script src="{{ asset('js/navbar.js') }}"></script>
-        <script src="{{ asset('js/counter.js') }}"></script>
-        <script src="{{ asset('js/custom.js') }}"></script>
+         <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/tiny-slider.js"></script>
+        <script src="js/flatpickr.min.js"></script>
+        <script src="js/aos.js"></script>
+        <script src="js/glightbox.min.js"></script>
+        <script src="js/navbar.js"></script>
+        <script src="js/counter.js"></script>
+        <script src="js/custom.js"></script>
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         {% endblock %}
     </body>
 </html>
