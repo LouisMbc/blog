@@ -44,21 +44,26 @@
                                     {% endif %}
                                     {% if app.user %}
                                         {% if is_granted('ROLE_ADMIN') %}
-                                            <li>
-                                                <a href="{{ path('app_admin_users') }}">Gérer les utilisateurs</a>
+                                            <li class="has-children">
+                                                <a href="#">Administration</a>
+                                                <ul class="dropdown">
+                                                    <li>
+                                                        <a href="{{ path('app_admin_posts') }}">Gérer les posts</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('app_post_index') }}">Gérer mes posts</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('app_category_index') }}">Gérer les catégories</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('app_admin_validate_comments') }}">Gérer les commentaires</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('app_admin_users') }}">Gérer les utilisateurs</a>
+                                                    </li>
+                                                </ul>
                                             </li>
-                                            <li>
-                                                <a href="{{ path('app_admin_posts') }}">Gérer les posts</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ path('app_post_index') }}">Gérer mes posts</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ path('app_category_index') }}">Gérer les catégories</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ path('app_admin_validate_comments') }}">Gérer les commentaires</a>
-                                            </li>   
                                         {% endif %}
                                         <li>
                                             <a href="{{ path('app_user_profile') }}">Voir mon profil</a>
