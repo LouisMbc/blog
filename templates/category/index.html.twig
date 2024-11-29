@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Gérer les catégories{% endblock %}
 
 {% block body %}
-    <h1>Index des  catégories</h1>
+    <h1>Gérer les catégories</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Description</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -17,14 +18,21 @@
             <tr>
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
+                <td>
+                    <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                    <form method="post" action="{{ path('app_category_delete', {'id': category.id}) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">Aucune catégorie</td>
+                <td colspan="3">Aucune catégorie</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_category_new') }}">Créer une nouvelle catégorie</a>
+    <a href="{{ path('app_category_new') }}" class="btn btn-success">Créer une nouvelle catégorie</a>
 {% endblock %}

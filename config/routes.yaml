@@ -56,11 +56,11 @@ app_category_show:
     controller: App\Controller\CategoryController::show
 
 app_category_edit:
-    path: /category/edit
+    path: /category/{id}/edit
     controller: App\Controller\CategoryController::edit
 
 app_category_delete:
-    path: /category/delete
+    path: /category/{id}
     controller: App\Controller\CategoryController::delete
 
 # Route pour commentaire

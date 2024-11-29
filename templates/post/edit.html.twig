@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit Post</h1>
 
-    {{ include('post/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('post/_form.html.twig', {'button_label': 'Modifer'}) }}
 
     {% if post.picture %}
         <img src="{{ asset('uploads/pictures/' ~ post.picture) }}" alt="{{ post.title }}" style="max-width: 100px;">
