@@ -68,9 +68,14 @@ class AdminController extends AbstractController
     }
 
     #[Route('/comments/{postId}', name: 'app_admin_comments', methods: ['GET', 'POST'])]
-    public function comments(Request $request, Post $post, EntityManagerInterface $entityManager): Response
+    public function comments(Request $request, int $postId, PostRepository $postRepository, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $post = $postRepository->find($postId);
+        if (!$post) {
+            throw $this->createNotFoundException('Post not found');
+        }
 
         if ($request->isMethod('POST')) {
             $commentId = $request->request->get('comment_id');
