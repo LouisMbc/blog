@@ -30,6 +30,9 @@ class PostController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -102,6 +105,8 @@ class PostController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -121,6 +126,8 @@ class PostController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager->remove($post);
             $entityManager->flush();
